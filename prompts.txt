@@ -1,0 +1,109 @@
+========================================================================
+PROMPTS USED
+========================================================================
+
+------------------------------------------------------------------------
+PROMPT 1: Conditioned Summarization (default)
+Used in: generate_conditioned_summaries(), generate_irrelevant_summaries()
+------------------------------------------------------------------------
+
+You are summarizing an academic paper for a specific reader.
+
+Reader profile: {profile_name} — {profile_desc}
+
+Paper abstract:
+{abstract}
+
+Write a 3-sentence summary of this paper tailored to the reader's background
+and interests. Highlight aspects most relevant to their profile. Be specific and
+faithful to what the paper actually says. Do not add information not in the abstract.
+
+
+------------------------------------------------------------------------
+PROMPT 2a: Mild Personalization
+Used in: generate_prompt_level_summaries()
+File: utils.py -> PROMPT_LEVELS["mild"]
+------------------------------------------------------------------------
+
+Write a 3-sentence summary of this paper for a {profile_name}.
+Be faithful to what the abstract says.
+
+------------------------------------------------------------------------
+PROMPT 2b: Moderate Personalization
+Used in: generate_prompt_level_summaries()
+File: utils.py -> PROMPT_LEVELS["moderate"]
+------------------------------------------------------------------------
+
+Write a 3-sentence summary of this paper tailored to a {profile_name} — {profile_desc}.
+Highlight aspects most relevant to their profile.
+Be faithful to what the paper actually says. Do not add information not in the abstract.
+
+------------------------------------------------------------------------
+PROMPT 2c: Aggressive Personalization
+Used in: generate_prompt_level_summaries()
+File: utils.py -> PROMPT_LEVELS["aggressive"]
+------------------------------------------------------------------------
+
+Write a 3-sentence summary of this paper SPECIFICALLY for a {profile_name} — {profile_desc}.
+Heavily emphasize what matters most to this reader.
+Actively reinterpret the paper through their lens and background.
+Use language and framing that speaks directly to their expertise and concerns.
+
+------------------------------------------------------------------------
+PROMPT 3: Baseline Summarization
+Used in: generate_baseline_summaries()
+------------------------------------------------------------------------
+
+Paper abstract:
+{abstract}
+
+Write a 3-sentence summary of this paper.
+Be specific and faithful to what the paper actually says.
+Do not add information not in the abstract.
+
+
+------------------------------------------------------------------------
+PROMPT 4: Pairwise Judge (LLM-as-Judge)
+Used in: pairwise_judge()
+------------------------------------------------------------------------
+
+You are evaluating which of two paper summaries is better suited for a specific reader.
+
+Reader profile: {profile_name} - {profile_desc}
+
+Paper abstract:
+{abstract}
+
+Summary A:
+{summary_a}
+
+Summary B:
+{summary_b}
+
+Which summary is better suited for this reader's background and interests?
+Consider: relevance of emphasis, appropriateness of language and depth.
+Respond ONLY in JSON: {"winner": "A" or "B" or "tie", "reason": "<one sentence>"}
+
+
+========================================================================
+USER PROFILES
+========================================================================
+
+The following 5 profiles are used across all prompts:
+
+1. NLP researcher
+   "Graduate student focused on language models, text generation, and NLP benchmarks"
+
+2. Systems engineer
+   "Practitioner focused on scalability, latency, and production ML deployment"
+
+3. ML beginner
+   "Undergraduate student learning machine learning fundamentals for the first time"
+
+4. Computer vision researcher
+   "Researcher primarily working on image recognition and visual perception tasks"
+
+5. Policy maker
+   "Government official with no technical background interested in AI's societal
+   impact, risks, and policy implications"
+
